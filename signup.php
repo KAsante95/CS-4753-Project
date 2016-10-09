@@ -131,7 +131,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 										</td>
 										<td>
 										State <span class='err'><?php echo $stateErr; ?></span><br/>
-										<input type="text" name="State">
+										<input type="text" name="State" id="state_entry" onkeyup="valueEntered()">
 										
 										Zip <span class='err'><?php echo $zipErr; ?></span><br/>
 										<input type="text" name="Zip">
@@ -199,11 +199,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 							</div>
 						</section>
 					</article>
-				<!-- Footer -->
-					<footer id="footer">
-						<ul class="icons">
-						</ul>
-					</footer>
 
 			</div>
 
@@ -213,6 +208,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 			<script src="assets/js/jquery.scrolly.min.js"></script>
 			<script src="assets/js/skel.min.js"></script>
 			<script src="assets/js/util.js"></script>
+			<script src="signup.js"></script>
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 			<script src="assets/js/main.js"></script>
 <?php
