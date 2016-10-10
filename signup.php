@@ -115,7 +115,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 								<form method="post" action="<?php echo $_SERVER['PHP_SELF'];?>">
 									<table>
 									<tr style="background-color: #fff">
-										<td>
+										<td style="width: 50%;">
 										Name <span class='err'><?php echo $nameErr; ?></span><br/>
 										<input type="text" name="Name">
 										
@@ -129,7 +129,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 										<input type="text" name="City">
 										
 										</td>
-										<td>
+										<td style="width: 50%;">
 										State <span class='err'><?php echo $stateErr; ?></span><br/>
 										<input type="text" name="State" id="state_entry" onkeyup="valueEntered()">
 										
@@ -153,42 +153,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 										</td>
 									</tr>
 									</table>
-									<!--<table>
-										<tr>
-											<td>
-												Name<br/>
-												<input type="" name="Name"><br/>
-											</td>
-											<td>
-												State<br/>
-												<input type="" name="State"><br/>
-											</td>
-										</tr>
-										<tr>
-											<td>
-												Address<br/>
-												<input type="" name="Address"><br/>
-											</td>
-											<td>
-												Zip<br/>
-												<input type="" name="Zip"><br/>
-											</td>
-										</tr>
-										<tr>
-											<td>
-												City<br/>
-												<input type="" name="City"><br/>
-											</td>
-											<td>
-												Language You Want to Teach<br/>
-												<input type="" name="Language To Teach"><br/>
-											</td>
-											<td>
-												Language You Want to Learn<br/>
-												<input type="" name="Languge To Learn"><br/>
-											</td>
-										</tr>
-									</table> -->
 								<div>
 									<div class="inner" style= "text-align: center;">
 									<ul class="actions">
@@ -213,15 +177,16 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 			<script src="assets/js/main.js"></script>
 <?php
 					$sql = '';
-
-					if($nameErr === '' && $emailErr === '' && $addrErr === '' && $cityErr === '' && $stateErr === '' && $zipErr === ''){
-						$sql = "INSERT INTO `CurrentClients`(`Name`, `Email`, `Address`, `City`, `State`, `Zip`, `Language Teach`, `Language Learn`) VALUES ('$name', '$email', '$addr', '$city', '$state', '$zip', '$langt', '$langl');";
-						if(mysqli_query($con, $sql)){
-							echo "";
-						} else {
-							echo "Error: " . $sql . "<br>" .  $con->error;
+					if($_SERVER["REQUEST_METHOD"] == "POST"){
+						if($nameErr === '' && $emailErr === '' && $addrErr === '' && $cityErr === '' && $stateErr === '' && $zipErr === ''){
+							$sql = "INSERT INTO `CurrentClients`(`Name`, `Email`, `Address`, `City`, `State`, `Zip`, `Language Teach`, `Language Learn`) VALUES ('$name', '$email', '$addr', '$city', '$state', '$zip', '$langt', '$langl');";
+							if(mysqli_query($con, $sql)){
+								echo "";
+							} else {
+								echo "Error: " . $sql . "<br>" .  $con->error;
+							}
+							//header('Location: http://localhost/CS-4753-project/login.html');
 						}
-						//header('Location: http://localhost/CS-4753-project/login.html');
 					}
 
 			?>
