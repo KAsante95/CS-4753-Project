@@ -7,7 +7,6 @@
 
 <!--
 -->
-
 <html>
 	<head>
 		<title>Sign Up</title>
@@ -33,7 +32,7 @@
 	$password = "password";
 
 //Error Message Variables
-	$nameErr = $emailErr = $addrErr = $cityErr = $stateErr = $zipErr = '';
+	$nameErr = $emailErr = $addrErr = $cityErr = $stateErr = $zipErr = $ccnErr = $cvvErr = '';
 
 if($_SERVER["REQUEST_METHOD"] == "POST"){
 	//POST Variables
@@ -45,6 +44,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 	$zip = $_POST["Zip"];
 	$langt = $_POST["Langt"];
 	$langl = $_POST["Langl"];
+	$ccn = $_POST["CCN"];
+	$cvv = $_POST["CVV"];
+	
 
 
 	$states = Array("AK","AL","AR","AZ","CA","CO","CT","DC","DE","FL","GA","GU","HI","IA","ID", "IL","IN","KS","KY","LA","MA","MD","ME","MH","MI","MN","MO","MS","MT","NC","ND","NE","NH","NJ","NM","NV","NY", "OH","OK","OR","PA","PR","PW","RI","SC","SD","TN","TX","UT","VA","VI","VT","WA","WI","WV","WY");
@@ -67,6 +69,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 	}
 	if(!preg_match("/^[0-9]{5}$/", $zip)){
 		$zipErr = 'Properly Formatted Zip Code Required';
+	}
+	if(!preg_match("/^[0-9]{16}$/", $ccn)){
+		$ccnErr = 'Properly Formatted Zip Code Required';
+	}
+	if(!preg_match("/^[0-9]{3}$/", $cvv)){
+		$cvvErr = 'Properly Formatted Zip Code Required';
 	}
 
 	}
@@ -93,7 +101,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 									<div id="menu">
 										<ul>
 											<li><a href="index.html">Home</a></li>
-											<li><a href="generic.html">About Us</a></li>
+											<li><a href="generic.php">About Us</a></li>
 											<li><a href="signup.php">Sign Up</a></li>
 											<li><a href="#">Log In</a></li>
 										</ul>
@@ -113,6 +121,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
   						<section class="wrapper style5">
   							<div class="inner" style="margin: auto;">
 								<form method="post" action="<?php echo $_SERVER['PHP_SELF'];?>">
+									<h3>Personal Informaiton</h3>
 									<table>
 									<tr style="background-color: #fff">
 										<td style="width: 50%;">
@@ -152,7 +161,37 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 										</select>
 										</td>
 									</tr>
+									</table><!--<br/>-->
+									<!-- Alter the front end of the form that you created on your signup page to allow for the collection of credit card information (number, expiration date, and CVV number). This will involve adding new text boxes to your old form. It may be smart to divide the form into two groups with the use of headers or titles, such as ‘Personal Information’ and ‘Banking Information’. -->
+
+									<h3>Banking Informaiton</h3>
+									<table>
+									<tr style="background-color: #fff">
+										<td style="width: 33.3%;">
+										Card Number <span class='err'><?php echo $nameErr; ?></span><br/>
+										<input type="text" name="CCN">
+										</td>
+										<td style="width: 33.3%;">
+										Expiration <span class='err'><?php echo $emailErr; ?></span><br/>
+										<select name="expdt">
+											<option value="2k16">2016</option>
+											<option value="2k17">2017</option>
+											<option value="2k18">2018</option>
+											<option value="2k19">2019</option>
+											<option value="2k20">2020</option>
+											<option value="2k21">2021</option>
+											<option value="2k22">2022</option>
+											<option value="2k23">2023</option>
+											<option value="2k24">2024</option>											
+										</select>
+										</td>
+										<td style="width: 33.3%;">
+										CVV <span class='err'><?php echo $cityErr; ?></span><br/>
+										<input type="text" name="CVV">
+										</td>
+									</tr>
 									</table>
+
 								<div>
 									<div class="inner" style= "text-align: center;">
 									<ul class="actions">
@@ -178,10 +217,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 <?php
 					$sql = '';
 					if($_SERVER["REQUEST_METHOD"] == "POST"){
-						if($nameErr === '' && $emailErr === '' && $addrErr === '' && $cityErr === '' && $stateErr === '' && $zipErr === ''){
-							$sql = "INSERT INTO `CurrentClients`(`Name`, `Email`, `Address`, `City`, `State`, `Zip`, `Language Teach`, `Language Learn`) VALUES ('$name', '$email', '$addr', '$city', '$state', '$zip', '$langt', '$langl');";
+						if($nameErr === '' && $emailErr === '' && $addrErr === '' && $cityErr === '' && $stateErr === '' && $zipErr === '' && $ccnErr === '' && $cvvErr === ''){
+							$sql = "INSERT INTO `CurrentClients`(`Name`, `Email`, `Address`, `City`, `State`, `Zip`, `Language Teach`, `Language Learn`, `CCN`, `CVV`) VALUES ('$name', '$email', '$addr', '$city', '$state', '$zip', '$langt', '$langl', '$ccn', '$cvv');";
 							if(mysqli_query($con, $sql)){
-								echo "";
+								echo "<script>
+										window.location.replace('purchase.php')
+									</script>";
 							} else {
 								echo "Error: " . $sql . "<br>" .  $con->error;
 							}
