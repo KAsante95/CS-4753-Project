@@ -6,7 +6,7 @@
     if (session_id() == "")
         session_start();
 
-    include('header.php');
+    include('purchase.php');
 ?>
     <div class="row">
         <div class="col-md-4"></div>
