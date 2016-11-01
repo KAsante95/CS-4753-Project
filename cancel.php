@@ -20,5 +20,5 @@
         <div class="col-md-4"></div>
     </div>
 <?php
-    include('footer.php');
+    //include('footer.php');
 ?>
