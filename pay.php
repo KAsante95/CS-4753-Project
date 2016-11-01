@@ -18,8 +18,8 @@
 
         if(verify_nonce()){
             $expressCheckoutFlowArray = json_decode($_SESSION['expressCheckoutPaymentData'], true);
-                    $expressCheckoutFlowArray['transactions'][0]['amount']['total'] = (float)$expressCheckoutFlowArray['transactions'][0]['amount']['total'] + (float)$_POST['shipping_method'] - (float)$expressCheckoutFlowArray['transactions'][0]['amount']['details']['shipping'];
-                    $expressCheckoutFlowArray['transactions'][0]['amount']['details']['shipping'] = $_POST['shipping_method'];
+                    /*$expressCheckoutFlowArray['transactions'][0]['amount']['total'] = (float)$expressCheckoutFlowArray['transactions'][0]['amount']['total'] + (float)$_POST['shipping_method'] - (float)$expressCheckoutFlowArray['transactions'][0]['amount']['details']['shipping'];
+                    $expressCheckoutFlowArray['transactions'][0]['amount']['details']['shipping'] = $_POST['shipping_method'];*/
                     $transactionAmountUpdateArray = $expressCheckoutFlowArray['transactions'][0];
                     $_SESSION['expressCheckoutPaymentData'] = json_encode($expressCheckoutFlowArray);
 
@@ -47,6 +47,7 @@
     $currency = $json_response['transactions'][0]['amount']['currency'];
     $transactionID= $json_response['transactions'][0]['related_resources'][0]['sale']['id'];
 
+    $payerEmail = filter_var($json_response['payer']['payer_info']['email'],FILTER_SANITIZE_SPECIAL_CHARS);
     $payerFirstName = filter_var($json_response['payer']['payer_info']['first_name'],FILTER_SANITIZE_SPECIAL_CHARS);
     $payerLastName = filter_var($json_response['payer']['payer_info']['last_name'],FILTER_SANITIZE_SPECIAL_CHARS);
     $recipientName= filter_var($json_response['payer']['payer_info']['shipping_address']['recipient_name'],FILTER_SANITIZE_SPECIAL_CHARS);
@@ -57,14 +58,58 @@
     $postalCode = filter_var($json_response['payer']['payer_info']['shipping_address']['postal_code'],FILTER_SANITIZE_SPECIAL_CHARS);
     $countryCode= filter_var($json_response['payer']['payer_info']['shipping_address']['country_code'],FILTER_SANITIZE_SPECIAL_CHARS);
 	
-    include('header.php');
+    //include('header.php');
 ?>
-    <div class="row">
-        <div class="col-md-4"></div>
-        <div class="col-md-4">
+
+
+
+<html>
+    <head>
+        <title>Purchase Confirmed</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+        <link rel="stylesheet" href="assets/css/main.css" />
+        <!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+        <!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+    </head>
+    <body>
+
+        <!-- Page Wrapper -->
+            <div id="page-wrapper">
+
+                <!-- Header -->
+                    <header id="header">
+                        <h1><a href="index.html">LinguiStack Exchange</a></h1>
+                        <nav id="nav">
+                            <ul>
+                                <li class="special">
+                                    <a href="#menu" class="menuToggle"><span>Menu</span></a>
+                                    <div id="menu">
+                                        <ul>
+                                            <li><a href="index.html">Home</a></li>
+                                            <li><a href="generic.html">About Us</a></li>
+                                            <li><a href="signup.php">Sign Up</a></li>
+                                            <li><a href="#">Log In</a></li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                        </nav>
+                    </header>
+
+                <!-- Main -->
+                    <article id="main">
+                        <header>
+                            <h2>Purchase Made</h2>
+                        </header>
+                        <section class="wrapper style5">
+                        <div class = "inner">
+
             <h4>
-                <?php echo($payerFirstName.' '.$payerLastName.', Thank you for your Order!');?><br/><br/>
-                Shipping Address: </h4>
+                <?php echo($payerFirstName.' '.$payerLastName.', Thank you for your Order!');?><br/>
+                An e-mail has been sent to confirm your transaction<br/>
+                Billing Address: </h4>
                 <?php echo($recipientName);?><br/>
                 <?php echo($addressLine1);?><br/>
                 <?php echo($addressLine2);?><br/>
@@ -78,15 +123,30 @@
                 Total Amount: <?php echo($finalAmount);?> &nbsp;  <?php echo($currency);?> <br/>
             </h4>
             <br/>
-            Return to <a href="index.php">home page</a>.
-        </div>
-        <div class="col-md-4"></div>
-    </div>
+            Return to the <a href="index.html">Home Page</a>.
+</div>
+</section>
+</article>
+</div>
+</body>
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/jquery.scrollex.min.js"></script>
+<script src="assets/js/jquery.scrolly.min.js"></script>
+<script src="assets/js/skel.min.js"></script>
+<script src="assets/js/util.js"></script>
+<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+<script src="assets/js/main.js"></script>
+<script type="text/javascript">
+</html>
+
+
+
+
 <?php
+    include('email.php');
     if (session_id() !== "") {
                session_unset();
                session_destroy();
             }
-    include('footer.php');
 ?>
 

@@ -10,10 +10,10 @@ $mail->isSMTP();
 // 0 = off (for production use)
 // 1 = client messages
 // 2 = client and server messages
-$mail->SMTPDebug = 2;
+//$mail->SMTPDebug = 2; //debugging messages disabled
 
 //Ask for HTML-friendly debug output
-$mail->Debugoutput = 'html';
+//$mail->Debugoutput = 'html';
 
 //Set the hostname of the mail server
 $mail->Host = 'smtp.gmail.com';
@@ -26,13 +26,24 @@ $mail->Password = "Ecommerce";
 
 
 //Change these to variables
-$mail->addAddress('cns5za@virginia.edu', 'Caleb Smith');
+$mail->addAddress($payerEmail, $payerFirstName.' '.$payerLastName);
 $mail->Subject = 'LinguiStackExchange Payment';
-$mail->Body = 'Thank you for using our service! You have been charged $5 for this past session.'; //change this 
-
+$mail->Body = $payerFirstName.' '.$payerLastName.", Thank you for your Order!\n".
+                "An e-mail has been sent to confirm your transaction\n".
+                'Billing Address: '.$recipientName."\n".
+                $addressLine1."\n".
+                $addressLine2."\n".
+                $city."\n".
+                $state.'-'.$postalCode."\n".
+                $countryCode."\n".
+                $paymentID."\n".
+				'Transaction ID : '.$transactionID."\n".
+                'State : '.$paymentState."\n".
+                'Total Amount: '.$finalAmount.' '.$currency;
+  
 //send the message, check for errors
 if (!$mail->send()) {
     echo "Mailer Error: " . $mail->ErrorInfo;
 } else {
-    echo "Message sent!";
+    echo "";
 }

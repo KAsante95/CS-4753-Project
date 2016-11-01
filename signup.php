@@ -32,7 +32,7 @@
 	$password = "password";
 
 //Error Message Variables
-	$nameErr = $emailErr = $addrErr = $cityErr = $stateErr = $zipErr = $ccnErr = $cvvErr = '';
+	$nameErr = $emailErr = $addrErr = $cityErr = $stateErr = $zipErr = $ccnErr = $expmoErr = $expyrErr = $cvvErr = '';
 
 if($_SERVER["REQUEST_METHOD"] == "POST"){
 	//POST Variables
@@ -45,6 +45,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 	$langt = $_POST["Langt"];
 	$langl = $_POST["Langl"];
 	$ccn = $_POST["CCN"];
+	$ccn = $_POST["CCN"];
+	$expmo = $_POST["expmo"];
+	$expyr = $_POST["expyr"];
 	$cvv = $_POST["CVV"];
 	
 
@@ -171,9 +174,26 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 										Card Number <span class='err'><?php echo $nameErr; ?></span><br/>
 										<input type="text" name="CCN">
 										</td>
-										<td style="width: 33.3%;">
-										Expiration <span class='err'><?php echo $emailErr; ?></span><br/>
-										<select name="expdt">
+										<td style="width: 16.65%;">
+										Expiration <span class='err'><?php echo $expmoErr; ?></span><br/>
+										<select name="expmo">
+											<option value="2k16">01</option>
+											<option value="2k17">02</option>
+											<option value="2k18">03</option>
+											<option value="2k19">04</option>
+											<option value="2k20">05</option>
+											<option value="2k21">06</option>
+											<option value="2k22">07</option>
+											<option value="2k23">08</option>
+											<option value="2k24">09</option>
+											<option value="2k22">10</option>
+											<option value="2k23">11</option>
+											<option value="2k24">12</option>								
+										</select>
+										</td>
+										<td style="width: 16.65%;">
+										<span class='err'><?php echo $expyrErr; ?></span><br/>
+										<select name="expyr">
 											<option value="2k16">2016</option>
 											<option value="2k17">2017</option>
 											<option value="2k18">2018</option>
@@ -182,7 +202,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 											<option value="2k21">2021</option>
 											<option value="2k22">2022</option>
 											<option value="2k23">2023</option>
-											<option value="2k24">2024</option>											
+											<option value="2k24">2024</option>								
 										</select>
 										</td>
 										<td style="width: 33.3%;">
@@ -218,7 +238,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 					$sql = '';
 					if($_SERVER["REQUEST_METHOD"] == "POST"){
 						if($nameErr === '' && $emailErr === '' && $addrErr === '' && $cityErr === '' && $stateErr === '' && $zipErr === '' && $ccnErr === '' && $cvvErr === ''){
-							$sql = "INSERT INTO `CurrentClients`(`Name`, `Email`, `Address`, `City`, `State`, `Zip`, `Language Teach`, `Language Learn`, `CCN`, `CVV`) VALUES ('$name', '$email', '$addr', '$city', '$state', '$zip', '$langt', '$langl', '$ccn', '$cvv');";
+							$sql = "INSERT INTO `CurrentClients`(`Name`, `Email`, `Address`, `City`, `State`, `Zip`, `Language Teach`, `Language Learn`, `CCN`, `ExpMo`, `ExpYr`, `CVV`) VALUES ('$name', '$email', '$addr', '$city', '$state', '$zip', '$langt', '$langl', '$ccn', '$expmo', '$expyr, $cvv');";
 							if(mysqli_query($con, $sql)){
 								echo "<script>
 										window.location.replace('purchase.php')
