@@ -193,7 +193,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 										<td style="width: 16.65%;">
 										<span class='err'><?php echo $expyrErr; ?></span><br/>
 										<select name="expyr">
-											<option value="2016">2016</option>
 											<option value="2017">2017</option>
 											<option value="2018">2018</option>
 											<option value="2019">2019</option>
@@ -239,8 +238,17 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 						if($nameErr === '' && $emailErr === '' && $addrErr === '' && $cityErr === '' && $stateErr === '' && $zipErr === '' && $ccnErr === '' && $cvvErr === ''){
 							$sql = "INSERT INTO `CurrentClients`(`Name`, `Email`, `Address`, `City`, `State`, `Zip`, `Language Teach`, `Language Learn`, `CCN`, `ExpMo`, `ExpYr`, `CVV`) VALUES ('$name', '$email', '$addr', '$city', '$state', '$zip', '$langt', '$langl', '$ccn', '$expmo', '$expyr', '$cvv');";
 							if(mysqli_query($con, $sql)){
+								session_start();
+								$_SESSION["Name"] = $name;
+								$_SESSION["Email"] = $email;
+								$_SESSION["Address"] = $addr;
+								$_SESSION["City"] = $city;
+								$_SESSION["State"] = $state;
+								$_SESSION["Zip"] = $zip;
+								$_SESSION["Langt"] = $langt;
+								$_SESSION["Langl"] = $langl;
 								echo "<script>
-										window.location.replace('purchase.php')
+										window.location.replace('member.php')
 									</script>";
 							} else {
 								echo "Error: " . $sql . "<br>" .  $con->error;
