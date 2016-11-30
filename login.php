@@ -17,6 +17,48 @@
 	</head>
 	<body>
 
+	<?php 
+
+//mysql server info
+	$servername = "localhost";
+	$username = "root";
+	$password = "password";
+
+	//connect
+	$con = mysqli_connect("127.0.0.1", "root", "", "LinguiStack");
+
+	//check
+	if(!$con){
+		die("Connection failed: " . $conn->connect_error);
+	}
+
+   if($_SERVER["REQUEST_METHOD"] == "POST") {
+      // username and password sent from form 
+      
+      $email = mysqli_real_escape_string($con,$_POST['Username']);
+      $userpassword = mysqli_real_escape_string($con,$_POST['Password']); 
+      
+      $sql = "SELECT * FROM CurrentClients WHERE Email = '$email' and Password = '$userpassword'";
+      $result = mysqli_query($con,$sql);
+
+      $count = mysqli_num_rows($result);
+      
+      // If result matched $email and $userpassword, table row must be 1 row
+		
+      if($count == 1) {
+         session_start();
+         $_SESSION['Name'] = $result->fetch_assoc()["Name"];
+         echo "<script>
+	 	window.location.replace('member.php')
+         </script>";
+      }else {
+	//I don't think this error does anything right now, you just redirect back onto the login page
+         $error = "Your User Name or Password is invalid";
+      }
+   }
+
+	?>
+
 		<!-- Page Wrapper -->
 			<div id="page-wrapper">
 
