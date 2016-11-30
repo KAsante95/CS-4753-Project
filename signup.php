@@ -1,4 +1,3 @@
-
 <!DOCTYPE HTML>
 <!--
 	Spectral by HTML5 UP
@@ -33,7 +32,7 @@
 	$password = "password";
 
 //Error Message Variables
-	$nameErr = $emailErr = $addrErr = $cityErr = $stateErr = $zipErr = $ccnErr = $expmoErr = $expyrErr = $cvvErr = $passErr ='';
+	$nameErr = $emailErr = $addrErr = $cityErr = $stateErr = $zipErr = $ccnErr = $expmoErr = $expyrErr = $cvvErr = '';
 
 if($_SERVER["REQUEST_METHOD"] == "POST"){
 	//POST Variables
@@ -74,21 +73,15 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 		$zipErr = 'Properly Formatted Zip Code Required';
 	}
 	if(!preg_match("/^[0-9]{16}$/", $ccn)){
-		$ccnErr = 'Properly Formatted CCN Required';
+		$ccnErr = 'Properly Formatted Zip Code Required';
 	}
 	if(!preg_match("/^[0-9]{3}$/", $cvv)){
-		$cvvErr = 'Properly Formatted CCV Required';
+		$cvvErr = 'Properly Formatted Zip Code Required';
 	}
-	/*if(!preg_match("/^[a-zA-Z ]+$/", $pass) || !preg_match("/^[a-zA-Z ]+$/", $pass_conf)){
-		$passErr = 'Illegal characters are used';
-	}
-	if($pass != $pass_conf) {
-		$passErr = "Passwords are not the same";
-	}*/
 
 	}
 	//connect
-	$con = new mysqli("127.0.0.1", "root", "", "LinguiStack");
+	$con = new mysqli("127.0.0.1", "root", "password", "LinguiStack");
 
 	//check
 	if(!$con){
@@ -111,9 +104,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 										<ul>
 											<li><a href="index.html">Home</a></li>
 											<li><a href="generic.php">About Us</a></li>
-											<li><a href="lessons.php">Lessons</a></li>
 											<li><a href="signup.php">Sign Up</a></li>
-											<li><a href="login.php">Log In</a></li>
+											<li><a href="#">Log In</a></li>
 										</ul>
 									</div>
 								</li>
@@ -131,7 +123,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
   						<section class="wrapper style5">
   							<div class="inner" style="margin: auto;">
 								<form method="post" action="<?php echo $_SERVER['PHP_SELF'];?>">
-									<h3>Personal Information</h3>
+									<h3>Personal Informaiton</h3>
 									<table>
 									<tr style="background-color: #fff">
 										<td style="width: 50%;">
@@ -176,57 +168,46 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
 									<h3>Banking Informaiton</h3>
 									<table>
-										<tr style="background-color: #fff">
-											<td style="width: 33.3%;">
-											Card Number <span class='err'><?php echo $nameErr; ?></span><br/>
-											<input type="text" name="CCN">
-											</td>
-											<td style="width: 16.65%;">
-											Expiration <span class='err'><?php echo $expmoErr; ?></span><br/>
-											<select name="expmo">
-												<option value="1">01</option>
-												<option value="2">02</option>
-												<option value="3">03</option>
-												<option value="4">04</option>
-												<option value="5">05</option>
-												<option value="6">06</option>
-												<option value="7">07</option>
-												<option value="8">08</option>
-												<option value="9">09</option>
-												<option value="10">10</option>
-												<option value="11">11</option>
-												<option value="12">12</option>								
-											</select>
-											</td>
-											<td style="width: 16.65%;">
-											<span class='err'><?php echo $expyrErr; ?></span><br/>
-											<select name="expyr">
-												<option value="2017">2017</option>
-												<option value="2018">2018</option>
-												<option value="2019">2019</option>
-												<option value="2020">2020</option>
-												<option value="2021">2021</option>
-												<option value="2022">2022</option>
-												<option value="2023">2023</option>
-												<option value="2024">2024</option>								
-											</select>
-											</td>
-											<td style="width: 33.3%;">
-											CVV <span class='err'><?php echo $cityErr; ?></span><br/>
-											<input type="text" name="CVV">
-											</td>
-										</tr>
-									</table>
-									<h3>Password</h3>
-									<table>
-										<td style="width: 50%;">
-											Password <span class='err'><?php echo $passErr; ?></span><br/>
-											<input type="password" name="Password">
+									<tr style="background-color: #fff">
+										<td style="width: 33.3%;">
+										Card Number <span class='err'><?php echo $nameErr; ?></span><br/>
+										<input type="text" name="CCN">
 										</td>
-										<td style="width: 50%;">
-											Password Confirmation<br/>
-											<input type="password" name="Password_Confirm">
+										<td style="width: 16.65%;">
+										Expiration <span class='err'><?php echo $expmoErr; ?></span><br/>
+										<select name="expmo">
+											<option value="1">01</option>
+											<option value="2">02</option>
+											<option value="3">03</option>
+											<option value="4">04</option>
+											<option value="5">05</option>
+											<option value="6">06</option>
+											<option value="7">07</option>
+											<option value="8">08</option>
+											<option value="9">09</option>
+											<option value="10">10</option>
+											<option value="11">11</option>
+											<option value="12">12</option>								
+										</select>
 										</td>
+										<td style="width: 16.65%;">
+										<span class='err'><?php echo $expyrErr; ?></span><br/>
+										<select name="expyr">
+											<option value="2017">2017</option>
+											<option value="2018">2018</option>
+											<option value="2019">2019</option>
+											<option value="2020">2020</option>
+											<option value="2021">2021</option>
+											<option value="2022">2022</option>
+											<option value="2023">2023</option>
+											<option value="2024">2024</option>								
+										</select>
+										</td>
+										<td style="width: 33.3%;">
+										CVV <span class='err'><?php echo $cityErr; ?></span><br/>
+										<input type="text" name="CVV">
+										</td>
+									</tr>
 									</table>
 
 								<div>
@@ -254,7 +235,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 <?php
 					$sql = '';
 					if($_SERVER["REQUEST_METHOD"] == "POST"){
-						if($nameErr === '' && $emailErr === '' && $addrErr === '' && $cityErr === '' && $stateErr === '' && $zipErr === '' && $ccnErr === '' && $cvvErr === '' && $passErr === ''){
+						if($nameErr === '' && $emailErr === '' && $addrErr === '' && $cityErr === '' && $stateErr === '' && $zipErr === '' && $ccnErr === '' && $cvvErr === ''){
 							$sql = "INSERT INTO `CurrentClients`(`Name`, `Email`, `Address`, `City`, `State`, `Zip`, `Language Teach`, `Language Learn`, `CCN`, `ExpMo`, `ExpYr`, `CVV`) VALUES ('$name', '$email', '$addr', '$city', '$state', '$zip', '$langt', '$langl', '$ccn', '$expmo', '$expyr', '$cvv');";
 							if(mysqli_query($con, $sql)){
 								session_start();

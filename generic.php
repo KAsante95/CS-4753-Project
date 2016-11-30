@@ -29,10 +29,9 @@
 									<div id="menu">
 										<ul>
 											<li><a href="index.html">Home</a></li>
-											<li><a href="generic.php">About Us</a></li>
-											<li><a href="lessons.php">Lessons</a></li>
+											<li><a href="generic.html">About Us</a></li>
 											<li><a href="signup.php">Sign Up</a></li>
-											<li><a href="login.php">Log In</a></li>
+											<li><a href="#">Log In</a></li>
 										</ul>
 									</div>
 								</li>
