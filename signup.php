@@ -1,4 +1,4 @@
-
+﻿
 <!DOCTYPE HTML>
 <!--
 	Spectral by HTML5 UP
@@ -49,8 +49,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 	$expmo = $_POST["expmo"];
 	$expyr = $_POST["expyr"];
 	$cvv = $_POST["CVV"];
-	
-
+	$userpass = $_POST["user_password"];
 
 	$states = Array("AK","AL","AR","AZ","CA","CO","CT","DC","DE","FL","GA","GU","HI","IA","ID", "IL","IN","KS","KY","LA","MA","MD","ME","MH","MI","MN","MO","MS","MT","NC","ND","NE","NH","NJ","NM","NV","NY", "OH","OK","OR","PA","PR","PW","RI","SC","SD","TN","TX","UT","VA","VI","VT","WA","WI","WV","WY");
 
@@ -174,7 +173,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 									</table><!--<br/>-->
 									<!-- Alter the front end of the form that you created on your signup page to allow for the collection of credit card information (number, expiration date, and CVV number). This will involve adding new text boxes to your old form. It may be smart to divide the form into two groups with the use of headers or titles, such as ‘Personal Information’ and ‘Banking Information’. -->
 
-									<h3>Banking Informaiton</h3>
+									<h3>Banking Information</h3>
 									<table>
 										<tr style="background-color: #fff">
 											<td style="width: 33.3%;">
@@ -221,11 +220,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 									<table>
 										<td style="width: 50%;">
 											Password <span class='err'><?php echo $passErr; ?></span><br/>
-											<input type="password" name="Password">
+											<input type="password" name="user_password">
 										</td>
 										<td style="width: 50%;">
 											Password Confirmation<br/>
-											<input type="password" name="Password_Confirm">
+											<input type="password" name="user_password_confirm">
 										</td>
 									</table>
 
@@ -255,7 +254,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 					$sql = '';
 					if($_SERVER["REQUEST_METHOD"] == "POST"){
 						if($nameErr === '' && $emailErr === '' && $addrErr === '' && $cityErr === '' && $stateErr === '' && $zipErr === '' && $ccnErr === '' && $cvvErr === '' && $passErr === ''){
-							$sql = "INSERT INTO `CurrentClients`(`Name`, `Email`, `Address`, `City`, `State`, `Zip`, `Language Teach`, `Language Learn`, `CCN`, `ExpMo`, `ExpYr`, `CVV`) VALUES ('$name', '$email', '$addr', '$city', '$state', '$zip', '$langt', '$langl', '$ccn', '$expmo', '$expyr', '$cvv');";
+							$sql = "INSERT INTO `CurrentClients`(`Name`, `Email`, `Address`, `City`, `State`, `Zip`, `Language Teach`, `Language Learn`, `CCN`, `ExpMo`, `ExpYr`, `CVV`, `Password`) VALUES ('$name', '$email', '$addr', '$city', '$state', '$zip', '$langt', '$langl', '$ccn', '$expmo', '$expyr', '$cvv', '$userpass');";
 							if(mysqli_query($con, $sql)){
 								session_start();
 								$_SESSION["Name"] = $name;
