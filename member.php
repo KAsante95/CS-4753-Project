@@ -1,5 +1,11 @@
 <?php
 	session_start();
+	if($_SESSION["Name"] == '') {
+		echo "<script>
+			window.location.replace('logout.php')
+		</script>";
+	}
+
 ?>
 <!DOCTYPE HTML>
 <!--
@@ -16,6 +22,66 @@
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
 		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+		<link rel='stylesheet' href='fullcalendar.css' />
+		<script src='lib/jquery.min.js'></script>
+		<script src='lib/moment.min.js'></script>
+		<script src='fullcalendar.js'></script>
+		<script type="text/javascript">$
+			$(document).ready(function() {
+
+			    $('#calendar').fullCalendar({
+			        events: [
+				   		 {
+				            title  : 'English w/ Bowen',
+				            start  : '2016-12-05T19:30:00',
+				            allDay : false,
+				            color: '#439960'
+				        },
+				        {
+				            title  : 'Akan w/ Kwame',
+				            start  : '2016-12-07T12:30:00',
+				            allDay : false,
+				            color: '#62A0E5'
+				        },
+				        {
+				            title  : 'Open Slot',
+				            start  : '2016-12-14T12:30:00',
+				            allDay : false,
+				            color: '#439960'
+				        },
+				        {
+				            title  : 'Open Slot',
+				            start  : '2016-12-10T12:30:00',
+				            allDay : false,
+				            color: '#62A0E5'
+				        }
+				    ],
+
+				    eventMouseover: function(event) {
+					    $('.fc-event-inner', this).append('<div id=\"'+event.id+'\" class=\"hover-end\">'+event.end+'</div>');
+					},
+
+					eventMouseout: function(event) {
+					    $('#'+event.id).remove();
+					}
+
+
+				    /*eventClick: function(calEvent, jsEvent, view) {
+
+				        alert('Event: ' + calEvent.title);
+				        alert('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
+				        alert('View: ' + view.name);
+
+				        // change the border color just for fun
+				        $(this).css('border-color', 'red');
+
+    				}*/
+
+
+			    });	
+
+			});
+		</script>
 	</head>
 	<body>
 
@@ -32,9 +98,10 @@
 									<div id="menu">
 										<ul>
 											<li><a href="index.html">Home</a></li>
-											<li><a href="generic.html">About Us</a></li>
+											<li><a href="generic.php">About Us</a></li>
+											<li><a href="lessons.php">Lessons</a></li>
 											<li><a href="signup.php">Sign Up</a></li>
-											<li><a href="#">Log In</a></li>
+											<li><a href="login.php">Log In</a></li>
 										</ul>
 									</div>
 								</li>
@@ -48,30 +115,18 @@
   							<h2>Welcome, <?php echo $_SESSION["Name"]; ?></h2>
   							<!--<p>We want everyone to have the ability to practice </br> speaking English with a native speaker</p> -->
  							<p style="font-size=10px;">Bringing Accessibility to the English Language</p>
+ 							<button onclick="window.location.replace('logout.php');">Log Out</button>
   						</header>
   						<section class="wrapper style5">
   							<div class="inner">
-								</p>
-								<p>For native English speakers: </br> You can make a Calendar showing available times and what the per hour rate is.</p>
-								<p>For learners: </br> You can make a Calendar showing available times and what per hour rate you are willing to pay.</p>
-								<p>*We do not set a rate because we find it better for both parties to set their own prices and let the market decide what the value is*</p>
-								<p>
-									What we ultimately want is for the process of learning the English language to be less burdensome both for the student and the instructor. We want everyone to have the ability to practice speaking English with a native speaker, and thus facilitate a smoother trasition into cultures that speak the English language. We believe that LingustackExchange does exactly that. We're <i>Bringing Accessibilty to the English Language</i>
-
-								</p> 
-							</div>
-									<div class="inner" style= "text-align: center;">
-									<ul class="actions">
-										<li><a href="signup.php" class="button special">Sign Up</a></li>
-									</ul>
-								</div>
+								<div id='calendar'></div>
+							</div>]
 						</section>
 					</article>
 
 			</div>
 
 		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
 			<script src="assets/js/jquery.scrollex.min.js"></script>
 			<script src="assets/js/jquery.scrolly.min.js"></script>
 			<script src="assets/js/skel.min.js"></script>
